@@ -2,12 +2,13 @@ import './App.css';
 import Navbar from './components/navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import Section from './components/Section/Section';
-import {fetchTopAlbums} from './api/api';
+import {fetchTopAlbums,fetchNewAlbums} from './api/api';
 import { useEffect,useState } from 'react';
 import styles from "./App.module.css";
 function App() {
 
   const [topAlbumns,setTopAlbumns] = useState([]);
+  const [newalbumns, setNewAlbumSongs] = useState([]);
 
 
 
@@ -22,9 +23,21 @@ function App() {
     }
   }
 
+  const generateNew = async()=>{
+    try{
+      const res = await fetchNewAlbums();
+      setNewAlbumSongs(res);
+    }
+    catch(error)
+    {
+      return null;
+    }
+  }
+
 
   useEffect(()=>{
     generateTop();
+    generateNew();
   },[])
 
 
@@ -35,6 +48,7 @@ function App() {
       <Hero />
       <div className={styles.sectionWrapper}>
         <Section type='album' title='Top Albums' data={topAlbumns}/>
+        <Section type='album' title='New Albums' data={newalbumns}/>
       </div>
     </div>
   );
