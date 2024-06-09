@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import Card from "../Card/Card";
 import styles from "./Section.module.css";
+import Carousel from "../carousel/Carousel";
 
 const Section = ({ type, title, data, toggle = true }) => {
   const [carouselToggle, setCarouselToggle] = useState(true);
@@ -28,7 +29,9 @@ const Section = ({ type, title, data, toggle = true }) => {
               ))}
             </div>
           ) : (
-            <div></div>
+            <div>
+              <Carousel data={data} renDerCardComponent={(data)=><Card data={data} type={type}/>}/>
+            </div>
           )}
         </div>
       ) : (
